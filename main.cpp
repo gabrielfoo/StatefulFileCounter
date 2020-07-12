@@ -29,7 +29,7 @@ int main()
 	puts("");
 
 	puts("Test case 5 : New file created now should default to 0 if only first param is used");
-	StatefulFileCounter zeroFile("zerofile");
+	StatefulFileCo unter zeroFile("zerofile");
 	std::cout << "Count: " << zeroFile.uiGetCount() << std::endl;
 	puts("");
 
@@ -86,9 +86,14 @@ int main()
 	}
 	puts("");
 #endif
-
+	
 	puts("Exit time");
 	StatefulFileCounter rebootCount("rebootCount", 3);
+
+	puts("Test case 15 : is stream good?");
+	std::cout << "is stream okay?: " << (rebootCount.isWorking() == CounterError::NO_ERROR ? "Yes" : "No") << std::endl;
+	puts("");
+
 	if (rebootCount != 0)
 	{
 		rebootCount--;

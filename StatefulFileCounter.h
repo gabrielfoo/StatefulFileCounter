@@ -3,6 +3,15 @@
 #include <string>
 #include <fstream>
 
+//error checking
+enum class CounterError {
+	NO_ERROR = 0,
+	STREAM_NOT_OPEN = 1,
+	STREAM_FAIL = 2,
+	STREAM_EOF = 3,
+	STREAM_BAD = 4
+};
+
 class StatefulFileCounter 
 {
 public:
@@ -29,6 +38,9 @@ public:
 
 	//copy constructor delete. making it explicit, as fstream already deletes it.
 	StatefulFileCounter& operator=(const StatefulFileCounter&) = delete;
+
+	//error checking
+	CounterError isWorking() const;
 	
 private:
 	inline bool bFileExist(const std::string& filename);

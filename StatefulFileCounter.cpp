@@ -87,10 +87,7 @@ inline unsigned int StatefulFileCounter::readNumberFromFile()
 		mfsFile.flush();
 	}
 	
-	//bool wtf = mfsFile.good();
-	//bool eof = mfsFile.eof();
-	//bool fail = mfsFile.fail();
-	//bool bad = mfsFile.bad();
+	
 	return (unsigned int)retCounter;
 }
 
@@ -141,4 +138,35 @@ StatefulFileCounter& StatefulFileCounter::operator=(const unsigned int& rhs)
 	return *this;
 }
 
+CounterError StatefulFileCounter::isWorking() const
+{
+	if (mfsFile.is_open())
+	{
+		if (mfsFile.good())
+		{
+			return CounterError::NO_ERROR;
+		}
+		else
+		{
+			if (mfsFile.eof())
+			{
+				return CounterError::STREAM_EOF;
+			}
+			else if (mfsFile.fail())
+			{
+				return CounterError::STREAM_FAIL;
+			}
+			else if (mfsFile.bad())
+			{
+				return CounterError::STREAM_BAD;
+			}
+			return CounterError::STREAM_FAIL;
+		}
+	}
+	else
+	{
+		return CounterError::STREAM_NOT_OPEN;
+	}
+
+}
 
